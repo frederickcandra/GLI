@@ -5,40 +5,37 @@ import com.example.demo.Model.ProfileModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class HomeController {
-    @GetMapping("/home")
-    public String home(Model model) {
 
-            List<ProfileModel> profileList = new ArrayList<>();
+        private List<ProfileModel> profileList = new ArrayList<>();
+        @GetMapping("/home")
+        public String home(Model model) {
+                model.addAttribute("profiles", profileList);
+                return "home";
+        }
 
-            ProfileModel pm1 = new ProfileModel();
-            pm1.setId(1);
-            pm1.setAge(23);
-            pm1.setGender("male");
-            pm1.setName("Candra");
+        @PostMapping("/submitProfile")
+        public String submitProfile(
+                @RequestParam("name") String name,
+                @RequestParam("age") int age,
+                @RequestParam("gender") String gender,
+                Model model) {
 
-            ProfileModel pm2 = new ProfileModel();
-            pm2.setId(2);
-            pm2.setAge(27);
-            pm2.setGender("female");
-            pm2.setName("Laras");
+                ProfileModel profile = new ProfileModel();
+                profile.setName(name);
+                profile.setAge(age);
+                profile.setGender(gender);
 
-            ProfileModel pm3 = new ProfileModel();
-            pm3.setId(3);
-            pm3.setAge(30);
-            pm3.setGender("male");
-            pm3.setName("Adi");
+                profileList.add(profile);
 
-            profileList.add(pm1);
-            profileList.add(pm2);
-            profileList.add(pm3);
-
-            model.addAttribute("profiles", profileList);
-            return "home";
+                model.addAttribute("profiles", profileList);
+                return "home";
         }
     }
