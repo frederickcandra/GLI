@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Asteroid Data</title>
+</head>
+<body>
+<h2>Asteroid Data</h2>
+
+<!-- Search Form -->
+<form action="/" method="get">
+  <label for="startDate">Start Date:</label>
+  <input type="date" id="startDate" name="startDate" value="${startDate}" required>
+  <label for="endDate">End Date:</label>
+  <input type="date" id="endDate" name="endDate" value="${endDate}" required>
+  <button type="submit">Search</button>
+</form>
+
+<!-- Asteroid Data Table -->
+<table border="1">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Potentially Hazardous</th>
+    <th>Magnitude</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="asteroid : ${asteroidData}">
+    <td th:text="${asteroid.name}">Name</td>
+    <td th:text="${asteroid.isPotentiallyHazardous ? 'Yes' : 'No'}">Potentially Hazardous</td>
+    <td th:text="${asteroid.magnitude}">Magnitude</td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
