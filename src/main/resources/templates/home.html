@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Boot MVC</title>
+</head>
+<body>
+<ul>
+    <th:block th:each="profile : ${profiles}">
+        <li>ID: <span th:text="${profile.id}"></span></li>
+        <li>Name: <span th:text="${profile.name}"></span></li>
+        <li>Age: <span th:text="${profile.age}"></span></li>
+        <li>Gender: <span th:text="${profile.gender}"></span></li>
+        <br>
+    </th:block>
+</ul>
+<!--<h1>Hi <span th:text="${name}"></span>, your gender is <span th:text="${gender}"></span> and ur id number is-->
+<!--    <span th:text="${id}"></span> </h1>-->
+</body>
+</html>
