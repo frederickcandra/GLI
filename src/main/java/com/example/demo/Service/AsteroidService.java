@@ -11,13 +11,13 @@ import java.util.Map;
 @Service
 public class AsteroidService {
 
-    private static final String API_KEY = "ZoLehhpqZedlTAwMJmrLlegPfoPc7rF2OFhlLKqS"; // Replace with your API Key
+    private static final String API_KEY = "ZoLehhpqZedlTAwMJmrLlegPfoPc7rF2OFhlLKqS";
     private static final String API_URL = "https://api.nasa.gov/neo/rest/v1/feed?start_date=%s&end_date=%s&api_key=" + API_KEY;
 
     public List<AsteroidModel> getAsteroids(String startDate, String endDate) {
         String url = String.format(API_URL, startDate, endDate);
         RestTemplate restTemplate = new RestTemplate();
-        Map<String, Object> response = restTemplate.getForObject(url, Map.class);
+        Map response = restTemplate.getForObject(url, Map.class);
 
         List<AsteroidModel> asteroids = new ArrayList<>();
         if (response != null && response.containsKey("near_earth_objects")) {
