@@ -1,41 +1,50 @@
 package com.example.demo.Controller;
 
-
 import com.example.demo.Model.ProfileModel;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 public class HomeController {
 
         private List<ProfileModel> profileList = new ArrayList<>();
+
+        @ApiResponses(value = {
+                @ApiResponse(responseCode = "200", description = "Successfully retrieved profiles")
+        })
         @GetMapping("/home")
-        public String home(Model model) {
-                model.addAttribute("profiles", profileList);
-                return "home";
+        public List<ProfileModel> getProfiles() {
+                return profileList;  // Mengembalikan list profile sebagai JSON
         }
 
+        @ApiResponses(value = {
+                @ApiResponse(responseCode = "200", description = "Profile successfully submitted and retrieved")
+        })
         @PostMapping("/submitProfile")
-        public String submitProfile(
-                @RequestParam("name") String name,
-                @RequestParam("age") int age,
-                @RequestParam("gender") String gender,
-                Model model) {
+        public List<ProfileModel> submitProfile(@RequestBody ProfileModel profile) {
 
-                ProfileModel profile = new ProfileModel();
-                profile.setName(name);
-                profile.setAge(age);
-                profile.setGender(gender);
+                // Memeriksa nilai default jika tidak diberikan
+                if (profile.getName() == null) {
+                        profile.setName("Unknown");
+                }
+                if (profile.getAge() == null) {
+                        profile.setAge(0);
+                }
+                if (profile.getGender() == null) {
+                        profile.setGender("Unknown");
+                }
 
+                // Menambahkan profile ke dalam list
                 profileList.add(profile);
 
-                model.addAttribute("profiles", profileList);
-                return "home";
+                // Mengembalikan list profile terbaru sebagai JSON
+                return profileList;
         }
-    }
+}

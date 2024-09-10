@@ -6,6 +6,6 @@ import lombok.Data;
 public class ProfileModel {
     public int id;
     public String name;
-    public int age;
+    public Integer age;
     private String gender;
 }
